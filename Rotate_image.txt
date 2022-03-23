@@ -1,0 +1,34 @@
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+       
+        int c=matrix[0].size(),r=matrix.size();
+        
+         // transpose
+
+    for(int i=0;i<r;i++)
+    {
+        for(int j=0;j<c;j++)
+        {
+            if(i<j)
+            {
+                swap(matrix[i][j],matrix[j][i]);
+            }
+        }
+    }
+        
+//         reversal
+         for(int i=0;i<r;i++)
+    {
+        int sc=0,ec=c-1;
+        while(sc<ec)
+        {
+            swap(matrix[i][sc],matrix[i][ec]);
+            sc++;
+            ec--;
+        }
+    }
+
+   
+    }
+};

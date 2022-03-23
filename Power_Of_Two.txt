@@ -1,0 +1,18 @@
+class Solution {
+    long int pow;
+    int i;
+public:
+    Solution()
+    {
+        pow=1;
+    }
+    bool isPowerOfTwo(int n) {
+        if(pow==n)
+            return true;
+        else if(pow>n)
+            return false;
+        pow=2*pow;
+        bool sol=isPowerOfTwo(n);
+            return sol;
+    }
+};

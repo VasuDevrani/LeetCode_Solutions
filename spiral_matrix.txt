@@ -1,0 +1,83 @@
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& m) {
+        int rows=m.size();
+        
+        vector<int>ans;
+        
+        int sc=0;
+        int sr=0;
+        int er=m.size()-1;
+        int ec=m[0].size()-1;
+        
+        if(ec==0 || er==0)
+        {
+            for(int i=0;i<=er;i++)
+            {
+                for(int j=0;j<=ec;j++)
+                    ans.push_back(m[i][j]);
+            }
+            return ans;
+        }
+        if(rows%2==0)
+        {
+            for(int i=0;i<rows/2;i++)
+            {
+                if(sc>ec)
+                    break;
+                for(int j=sc;j<=ec;j++)
+                    ans.push_back(m[sr][j]);
+                
+                sr++;
+                if(sr>er)
+                   break;
+                for(int j=sr;j<=er;j++)
+                ans.push_back(m[j][ec]);
+                
+                ec--;
+                 if(ec<sc)
+                   break;
+                for(int j=ec;j>=sc;j--)
+                    ans.push_back(m[er][j]);
+                
+                er--;
+                if(er<sr)
+                    break;
+            for(int j=er;j>=sr;j--)
+                    ans.push_back(m[j][sc]);
+                sc++;
+            }
+        }
+        
+        else
+        {
+           for(int i=0;i<(rows+1)/2;i++)
+            {
+               if(sc>ec)
+                   break;
+                for(int j=sc;j<=ec;j++)
+                    ans.push_back(m[sr][j]);
+                
+                sr++;
+               if(sr>er)
+                   break;
+                for(int j=sr;j<=er;j++)
+                ans.push_back(m[j][ec]);
+                
+                ec--;
+               if(ec<sc)
+                   break;
+                for(int j=ec;j>=sc;j--)
+                    ans.push_back(m[er][j]);
+                
+                er--;
+               if(er<sr)
+                    break;
+                for(int j=er;j>=sr;j--)
+                    ans.push_back(m[j][sc]);
+               sc++;
+            } 
+        }
+        return ans;
+    }
+};

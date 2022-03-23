@@ -1,0 +1,17 @@
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int t) {
+        int r=matrix.size(), c=matrix[0].size();
+        int i=0,j=c-1;
+        while(i<r && j>=0)
+        {
+            if(matrix[i][j]==t)
+                return true;
+            else if(matrix[i][j]<t)
+                i++;
+            else if(matrix[i][j]>t)
+                j--;
+        }
+        return false;
+    }
+};
