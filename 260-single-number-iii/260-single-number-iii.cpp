@@ -1,41 +1,39 @@
 class Solution {
 public:
     vector<int> singleNumber(vector<int>& nums) {
-        int ans=0,bit=0;
-        for(int i=0;i<nums.size();i++)
+        
+        vector<int>ans;
+//         get the xor of two non repeated numbers
+        int xr=nums[0];
+     for(int i=1;i<nums.size();i++)
+     {
+         xr^=nums[i];
+     }
+        
+//         find the first '1' in binary of xor
+        int check=xr;
+        int i=0;
+        while((check&1)!=1)
         {
-            ans=ans^nums[i];
+            i++;
+            check=check>>1;
         }
-        
-//         finding bit of 1 in ans;
-        int n=ans;
-        while(n!=0)
+      
+//      find one of the number
+        int sum=0;
+        for(int j=0;j<nums.size();j++)
         {
-            if((int)(n&1)==1)
-            break;
-            bit++;
-            n=n>>1;
+            int temp=nums[j];
+            nums[j]=nums[j]>>i;
+            if((nums[j]&1)==1)
+            sum^=temp;
+             
         }
-       
+      
+        ans.push_back(sum);
+        ans.push_back(sum^xr);
         
-//         creating mask;
-        int mask=1<<bit;
-//         finding the first non repeated number by taking xor of those arr elements whose bit's bit is 1
-        
-        int a=0;
-        for(int i=0;i<nums.size();i++)
-        {
-            if((nums[i]&mask)!=0)
-              a=a^nums[i];  
-        }
-        
-//         finally finding the second non repeated digit
-        int b=a^ans;
-        
-        vector<int>v;
-        v.push_back(a);
-        v.push_back(b);
-        return v;
+        return ans;
         
     }
 };
