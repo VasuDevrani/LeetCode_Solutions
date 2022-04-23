@@ -11,35 +11,73 @@
 class Solution {
 public:
     
-    int length(ListNode*head)
-    {
-        int c=0;
-        while(head!=NULL)
-        {
-            head=head->next;
-            c++;
-        }
-        return c;
-    }
+    // int length(ListNode*head)
+    // {
+    //     int c=0;
+    //     while(head!=NULL)
+    //     {
+    //         head=head->next;
+    //         c++;
+    //     }
+    //     return c;
+    // }
     
     ListNode* deleteMiddle(ListNode* head) {
-        int half=length(head)/2;
-        if(half==0)
+     
+        if(head->next==NULL)
         {
             delete(head);
             ListNode*n=NULL;
             return n;
         }
+        ListNode*i=head;
+        ListNode*j=head;
+        ListNode*k=head;
         
-        ListNode*temp=head;
-        for(int i=0;i<half-1;i++)
+        while(j!=NULL && j->next!=NULL)
         {
-            temp=temp->next;
+            k=i;
+            i=i->next;
+            j=j->next->next;
         }
-        ListNode*forward=temp->next->next;
-        delete(temp->next);
-        temp->next=forward;
+        k->next=i->next;
+        delete(i);
         return head;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//         int half=length(head)/2;
+//         if(half==0)
+//         {
+//             delete(head);
+//             ListNode*n=NULL;
+//             return n;
+//         }
+        
+//         ListNode*temp=head;
+//         for(int i=0;i<half-1;i++)
+//         {
+//             temp=temp->next;
+//         }
+//         ListNode*forward=temp->next->next;
+//         delete(temp->next);
+//         temp->next=forward;
+//         return head;
         
     }
 };
