@@ -1,8 +1,6 @@
 class RecentCounter {
 public:
     queue<int>pings;
-    vector<int>pin;
-    int j=0;
     
     RecentCounter() {
         
@@ -11,22 +9,11 @@ public:
     int ping(int t) {
         int x=t-3000;
         pings.push(t);
-        pin.push_back(t);
         
-        int ct=0;
-        for(int i=pin.size()-1;i>=j;i--)
-        {
-            if(pin[i]>=x && pin[i]<=t)
-            {
-                ct++;
-            }
-            else
-            {
-                pings.pop();
-                j++;
-            }
-        }
-        return ct;
+        while(pings.front()<x)
+            pings.pop();
+        
+        return pings.size();
     }
 };
 
