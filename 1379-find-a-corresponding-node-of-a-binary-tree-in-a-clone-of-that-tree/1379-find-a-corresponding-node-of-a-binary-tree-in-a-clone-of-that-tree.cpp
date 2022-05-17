@@ -10,28 +10,14 @@
 
 class Solution {
 public:
-    
-    void getans(TreeNode*o,TreeNode*cl,TreeNode*t,TreeNode*&ans)
-    {
-//         base case
-        if(o==NULL)
-            return;
-        if(o==t)
-        {
-            ans=cl;
-            return;
-        }
-        
-//         recursive case
-        getans(o->left,cl->left,t,ans);
-        getans(o->right,cl->right,t,ans);
-        
-    }
-    
-    TreeNode* getTargetCopy(TreeNode* o, TreeNode* cl, TreeNode* t) {
-        TreeNode*ans=NULL;
-        getans(o,cl,t,ans);
-        
+    TreeNode*ans;
+    TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {
+        if (cloned == NULL)
+            return cloned;
+        if (cloned->val == target->val) // If target node found in cloned tree save it into a variable.
+            ans = cloned;
+        getTargetCopy(original, cloned->left, target);
+        getTargetCopy(original, cloned->right, target);
         return ans;
     }
 };
