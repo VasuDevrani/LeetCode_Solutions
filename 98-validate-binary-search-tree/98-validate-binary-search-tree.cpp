@@ -12,15 +12,22 @@
 class Solution {
 public:
 
-    bool isValidBST(TreeNode* root) {
-        TreeNode* prev = NULL;
-        return validate(root, prev);
+   bool valid(TreeNode* root, TreeNode* minnode, TreeNode* maxnode){
+        if(root == NULL)
+            return true;
+        
+        if(minnode != NULL && root->val <= minnode->val)
+            return false;
+        if(maxnode != NULL && root->val >= maxnode->val)
+            return false;
+        
+        bool l = valid(root->left, minnode, root);
+        bool r = valid(root->right, root, maxnode);
+        
+        return l && r;
     }
-    bool validate(TreeNode* node, TreeNode* &prev) {
-        if (node == NULL) return true;
-        if (!validate(node->left, prev)) return false;
-        if (prev != NULL && prev->val >= node->val) return false;
-        prev = node;
-        return validate(node->right, prev);
+
+    bool isValidBST(TreeNode* root) {
+        return valid(root, NULL, NULL);
     }
 };
