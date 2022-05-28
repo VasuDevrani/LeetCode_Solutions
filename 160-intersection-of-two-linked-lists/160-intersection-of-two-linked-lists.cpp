@@ -28,9 +28,7 @@ public:
         if(l2>l1)
         {
             while(diff--)
-            {
                 headB=headB->next;
-            }
         }
         else{
             while(diff--)
