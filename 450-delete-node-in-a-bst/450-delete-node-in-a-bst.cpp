@@ -11,54 +11,54 @@
  */
 class Solution {
 public:
-     TreeNode* deleteNode(TreeNode* root, int key) 
+    void getMax(TreeNode*root, int &max)
     {
-        if(!root)
-            return NULL;
-        
-        if(key < root->val)
-            root->left = deleteNode(root->left, key);
-        
-        else if(key > root->val)
-            root->right = deleteNode(root->right, key);
-        
-        else
+        if(root->left == NULL)
         {
-            if(!root->left && !root->right)
-            {
-                delete root;
-                return NULL;
-            }
-            
-            if(!root->left)
-            {
-                TreeNode* temp = root->right;
-                delete root;
-                return temp;
-            }
-            
-            if(!root->right)
-            {
-                TreeNode* temp = root->left;
-                delete root;
-                return temp;
-            }
-            
-            TreeNode* temp = findMin(root->right);
-            
-            root->val = temp->val; 
-            
-            root->right = deleteNode(root->right, temp->val);
+            max = root->val;
+            return;
         }
         
-        return root;
+        getMax(root->left, max);
     }
     
-    
-    TreeNode* findMin(TreeNode* root)
-    {
-        while(root->left)
-            root = root->left;
+    TreeNode* deleteNode(TreeNode* root, int k) {
+        if(root == NULL)
+            return NULL;
+        
+//         leaf node
+        if(root->val == k && root->left == NULL && root->right == NULL)
+        {
+            delete(root);
+            return NULL;
+        }
+        
+//         partial leaf nodes
+        if(root->val == k && root->left == NULL)
+        {
+            TreeNode*temp = root->right;
+            delete(root);
+            return temp;
+        }
+        if(root->val == k && root->right == NULL)
+        {
+            TreeNode*temp = root->left;
+            delete(root);
+            return temp;
+        }
+        
+//         non leaf nodes
+        if(root->val == k)
+        {
+            int max = k;
+            getMax(root->right, max);
+            root->right = deleteNode(root->right, max);
+            root->val = max;
+            return root;
+        }
+        
+        root->left = deleteNode(root->left, k);
+        root->right = deleteNode(root->right, k);
         
         return root;
     }
