@@ -3,36 +3,28 @@ public:
     int minDeletions(string s) {
         if(s.length() == 1)
             return 0;
-       unordered_map<char,int>m;
         
-        for(int i=0;i<s.length();i++)
-            m[s[i]]++;
+        sort(s.begin(),s.end());
         
-        vector<int>v;
-        for(auto x:m)
-            v.push_back(x.second);
+        vector<int>freq(26,0);
+        int ans = 0;
+        unordered_set<int>set;
         
-        sort(v.begin(), v.end(), greater<int>());
-        for(int i=0;i<v.size();i++)
-            cout<<v[i]<<" ";
-        cout<<endl;
-        
-        int prev = v[0], ans = 0;
-        for(int i=1;i<v.size();i++)
+        //creating frequency array
+        for(auto ch:s)
         {
-            if(v[i] >= prev)
+            freq[ch-'a']++;
+        }
+        
+        //checking if frequency is already present
+        for(int i=0;i<26;i++)
+        {
+            while(freq[i] && set.find(freq[i]) != set.end())
             {
-                if(prev - 1 <= 0){
-                    ans = ans + v[i];
-                    v[i] = 0;
-                }
-                else{
-                    ans = ans + v[i] - prev + 1;
-                    v[i] = prev - 1;
-                }
+                freq[i]--;
+                ans++;
             }
-            prev = v[i];
-            cout<<prev<<" ";
+            set.insert(freq[i]);
         }
         
         return ans;
