@@ -1,25 +1,33 @@
 class Solution {
 public:
-    int climbStairs(int n) {
-        // if(n==0)
-        // {
-        //     int c=1;
-        //     return c;
-        // }
-        // if(n<0)
-        // {
-        //     return 0;
-        // }
-        // int x=climbStairs(n-2);
-        // int y=climbStairs(n-1);
-        // return x+y;
-        int p1=1,p2=1;
-        for(int i=2;i<=n;i++){
-            int t = p2;
-            p2=p1+p2;
-            p1=t;
-        }
-        return p2;
     
+    int getCount(int n, long int dp[])
+    {
+//         base case
+        if(n == 0)
+            return 1;
+//         recursive case
+        
+        if(dp[n] != 0)
+            return dp[n];
+        
+        long int ways = 0;
+        for(int i=1;i<=2;i++)
+        {
+            if(n-i >= 0)
+            {
+                ways += getCount(n-i, dp);
+            }
+        }
+        return dp[n] = ways;
+    }
+    
+    int climbStairs(int n) {
+        long int dp[n+1];
+        
+        for(int i=0;i<n+1;i++)
+            dp[i] = 0;
+        
+        return getCount(n, dp);
     }
 };
