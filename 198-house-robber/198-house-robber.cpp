@@ -7,20 +7,22 @@ public:
         if(n == 1)
             return nums[0];
         
-        vector<int>dp(n+1, 0);
-        dp[0] = 0; //for i<0
-        dp[1] = nums[0]; //for i=0
+        int a = 0; //for i<0
+        int b = nums[0]; //for i=0
             
         for(int i=1;i<n;i++) //indexes shows the index of nums
         {
 //             include case
-            int incl = dp[i-1] + nums[i]; //i-1 of nums is i-2 of dp
+            int incl = a + nums[i]; //i-1 of nums is i-2 of dp
 //             exclude case
-            int excl = dp[i];
+            int excl = b;
             
-            dp[i+1] = max(incl, excl);
+            int c = max(incl, excl);
+            
+            a = b;
+            b = c;
         }
         
-        return dp[n];
+        return b;
     }
 };
