@@ -1,6 +1,9 @@
 class Solution {
 public:
     int wiggleMaxLength(vector<int>& nums) {
+        
+//      COUNT THE NUMBER OF Ups AND Downs POINTS
+        
         int n = nums.size();
         if(n == 1)
             return 1;
