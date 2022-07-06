@@ -1,25 +1,32 @@
 class Solution {
 public:
-//     dry run here: -2,2,4,3,0,1,-2,-1
-    
+//     prefix sum based dp solution
     int maxProduct(vector<int>& nums) {
         int n = nums.size();
-        int ans = nums[0];
+        if(n == 1)
+            return nums[0];
         
-        int mn = ans, mx = ans;
-        for(int i=1;i<n;i++)
+        int mx_Prod = 0;
+        int cur_Prod = 1;
+        int first_negative = 1;
+        
+        for(int i=0;i<n;i++)
         {
-//             whenever there's a negative element, it is gonna reduce the max and increase the small, so swap them...
-            if(nums[i] < 0)
-                swap(mn, mx);
+            cur_Prod *= nums[i];
+            mx_Prod = max(mx_Prod, cur_Prod);
             
-//             this operation ensures the regeneration of product if 0 has arrived
-            mx = max(nums[i], mx*nums[i]);
-            mn = min(nums[i], mn*nums[i]);
-            
-            ans = max(mx, ans);
+            if(cur_Prod < 0)
+            {
+                mx_Prod = max(mx_Prod, cur_Prod/first_negative);
+                if(first_negative == 1)
+                    first_negative = cur_Prod;
+            }
+            if(cur_Prod == 0)
+            {
+                first_negative = 1;
+                cur_Prod = 1;
+            }
         }
-        
-        return ans;
+        return mx_Prod;
     }
 };
