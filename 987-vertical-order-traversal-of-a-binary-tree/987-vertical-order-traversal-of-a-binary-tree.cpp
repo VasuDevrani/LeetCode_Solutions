@@ -19,12 +19,14 @@ public:
         
         m[d].push_back(make_pair(l, root->val));
         
+//         preorder traversal 
         getAns(root->left, l+1, d-1, m);
         getAns(root->right, l+1, d+1, m);
     }
     
     vector<vector<int>> verticalTraversal(TreeNode* root) {
         
+//         this type of map is necessary to ensure if sorting restrictions are fulfilled
         map<int,vector<pair<int,int>>>m;
         
         vector<vector<int>>ans;
@@ -33,11 +35,14 @@ public:
         
         for(auto x:m)
         {
+//             sorts according to the level
             sort(x.second.begin(), x.second.end());
             
             vector<int>left;
-            for(auto y:x.second)
+            for(auto y:x.second){
                 left.push_back(y.second);
+                cout<<y.second<<" ";
+            }
             
             ans.push_back(left);
         }
