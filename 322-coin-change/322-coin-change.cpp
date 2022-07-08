@@ -46,10 +46,42 @@ public:
         return dp[n][t] = min(take, not_take);
     }
     
+    int BotTop(int n, int t, vector<int>coins)
+    {
+        vector<vector<int>>dp(n, vector<int>(t+1, 0));
+        
+        for(int target=0; target<=t; target++)
+        {
+            if(target % coins[0] == 0)
+                dp[0][target] = target / coins[0];
+            else
+                dp[0][target] = 100000000;
+        }
+        
+        for(int i=1;i<n;i++) //index
+        {
+            for(int j=0;j<=t;j++)
+            {
+                int not_take = dp[i-1][j];
+                int take = INT_MAX;
+
+                if(coins[i] <= j)
+                    take = 1 + dp[i][j-coins[i]];
+
+                dp[i][j] = min(take, not_take);
+            }
+        }
+        
+        return dp[n-1][t] < 100000000 ? dp[n-1][t] : -1;
+    }
+    
     int coinChange(vector<int>& coins, int amount) {
+        if(amount == 0)
+            return 0;
         int n = coins.size();
         
-        vector<vector<int>>dp(n, vector<int>(amount+1, -1));
-        return TopBot(n-1, amount, coins, dp) < 100000000 ? TopBot(n-1, amount, coins, dp) : -1;
+        // vector<vector<int>>dp(n, vector<int>(amount+1, -1));
+        // return TopBot(n-1, amount, coins, dp) < 100000000 ? TopBot(n-1, amount, coins, dp) : -1;
+        return BotTop(n, amount, coins);
     }
 };
