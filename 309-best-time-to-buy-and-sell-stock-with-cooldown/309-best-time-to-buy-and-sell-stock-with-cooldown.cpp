@@ -75,13 +75,41 @@ public:
     }
     
     
+    int BotUp_space(vector<int>prices, int n)
+    {
+        vector<int>prev(3, 0), cur(3, 0);
+        
+        for(int i=n-1;i>=0;i--)
+        {
+            for(int buy=2;buy>=0;buy--)
+            {
+                if(buy == 0){
+                    
+                    cur[buy] = max(prev[buy+1] - prices[i], prev[buy]);
+                    
+                }
+                else if(buy == 1){
+                    
+                    cur[buy] = max(prev[buy+1] + prices[i], prev[buy]);
+                    
+                }
+                else{
+                    cur[buy] = prev[0];
+                }
+            }
+            prev = cur;
+        }
+        
+        return prev[0];
+    }
+    
     int maxProfit(vector<int>& prices) {
         int n = prices.size();
         
         // vector<vector<int>>dp(n, vector<int>(3, -1));
         // return TopBot(prices, n, 0, 0, dp);
         
-        return BotUp(prices, n);
+        return BotUp_space(prices, n);
     }
 };
 // 0: buy, 1: sell, 2: calm
