@@ -1,43 +1,36 @@
 class Solution {
 public:
+    vector<int>parent;
+    
+    int find_par(int node)
+    {
+        if(parent[node] == node)
+            return node;
+        else 
+            return parent[node] = find_par(parent[node]);
+    }
+
+    void Union(int u, int v)
+    {
+        int pu = find_par(u) ; 
+        int pv = find_par(v);
+        
+        parent[pu] = pv; 
+    }
+    
     bool validPath(int n, vector<vector<int>>& edges, int src, int dest) {
-//         create the graph
-        unordered_map<int,list<int>>adj;
+        parent.resize(n);
+        
+        for(int i=0;i<n;i++)
+        {
+            parent[i] = i;
+        }
         
         for(int i=0;i<edges.size();i++)
         {
-            adj[edges[i][1]].push_back(edges[i][0]);
-            adj[edges[i][0]].push_back(edges[i][1]);
+            Union(edges[i][0], edges[i][1]);
         }
         
-//         run a bfs from start node, if destination node exist in same graph component then its true else not
-        
-        queue<int>q;
-        q.push(src);
-        
-        bool* visited = new bool[n];
-        visited[src] = true;
-        
-        for(int i=0;i<n;i++)
-            visited[i] = false;
-        
-        while(!q.empty())
-        {
-            int node = q.front();
-            q.pop();
-            
-            if(node == dest)
-                return true;
-            
-            for(auto nbr : adj[node])
-            {
-                if(!visited[nbr])
-                {
-                    visited[nbr] = true;
-                    q.push(nbr);
-                }
-            }
-        }
-        return false;
+        return find_par(src) == find_par(dest);
     }
 };
