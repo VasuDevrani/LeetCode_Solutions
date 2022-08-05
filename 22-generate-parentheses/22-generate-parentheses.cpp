@@ -1,34 +1,30 @@
 class Solution {
 public:
-    
-    vector<string>ans;
-    
-    void brackets(int n,int i,int j,string s)
+    void ans(vector<string>&v,string s,int n,int open,int close)
     {
-//         base
-        if(i>n && j!=n)
-            return;
-        else if(j>n && i!=n)
-            return;
-        else if(i>n-1 && j>n-1)
+        //base case
+        if(s.length()==2*n)
         {
-            ans.push_back(s);
+            v.push_back(s);
             return;
         }
-        
-        
-//        recursive
-        brackets(n,i+1,j,s+'(');
-        if(j<i)
-            brackets(n,i,j+1,s+')');
-        
+        //rec case
+        if(open<n)
+        {
+            ans(v,s+'(',n,open+1,close);
+        }
+        if(close<open)
+        {
+            ans(v,s+')',n,open,close+1);
+        }
+        return;
     }
-    
-    
-    vector<string> generateParenthesis(int n) {
-      brackets(n,0,0,""); 
-        
-        return ans;
-        
+    vector<string> generateParenthesis(int n) 
+    {
+        int idx=0;
+        vector<string>v;
+        string s="";
+        ans(v,s,n,0,0);
+        return v;
     }
 };
