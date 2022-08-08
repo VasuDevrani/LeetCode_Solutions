@@ -19,12 +19,12 @@ public:
         int x = height(root->left);
         int y = height(root->right);
         
-        return max(x,y) + 1;
+        return max(x,y)+1;
     }
     
     TreeNode*lca(TreeNode*root, int l, int h)
     {
-        if(root == NULL)
+        if(root ==  NULL)
             return NULL;
         if(l == h)
             return root;
@@ -34,14 +34,15 @@ public:
         
         if(left != NULL && right != NULL)
             return root;
-        else if(right == NULL)
-            return left;
-        else 
+        else if (left == NULL)
             return right;
+        else 
+            return left;
     }
     
     TreeNode* lcaDeepestLeaves(TreeNode* root) {
         int h = height(root);
+        
         return lca(root, 1, h);
     }
 };
