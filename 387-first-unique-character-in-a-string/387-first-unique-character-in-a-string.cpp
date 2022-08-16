@@ -1,37 +1,21 @@
 class Solution {
 public:
     int firstUniqChar(string s) {
-        int freq[26]={0};
-        queue<int>q;
+        unordered_map<char, pair<int,int>>m;
         
-        for(int i=0;i<s.length();i++)
+        for(int i=s.length()-1;i>=0;i--)
         {
-            freq[s[i]-'a']++;
-            if(q.empty())
-            {
-                q.push(i);
-                continue;
-            }
-            
-            while(!q.empty() && (s[i]==s[q.front()] || freq[s[q.front()]-'a']>1) )
-            {
-                q.pop();
-            }
-                q.push(i);
-            
+            if(m.find(s[i]) == m.end())
+                m[s[i]] = make_pair(i, 1);
+            else
+                m[s[i]].second++;
         }
-        // queue<int>q1=q;
-        // while(!q1.empty())
-        // {
-        //     cout<<q1.front()<<" ";
-        //     q1.pop();
-        // }
-        if(q.empty())
+        
+        for(auto ch: m)
         {
-            return -1;
+            if(ch.second.second == 1)
+                return ch.second.first;
         }
-        if(freq[s[q.front()]-'a']>1)
-            return -1;
-        return q.front();
+        return -1;
     }
 };
